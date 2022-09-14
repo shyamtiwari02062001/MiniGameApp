@@ -11,7 +11,7 @@ const App = () => {
   };
   let screen = <StartGameScreen onConfirm={pickedNumberHandler} />;
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = <GameScreen userNumber={userNumber} />;
   }
   return (
     <LinearGradient
