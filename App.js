@@ -13,8 +13,9 @@ const App = () => {
     setUserNumber(pickedNumber);
     setGameOver(false);
   };
-  const gameOverHandler = () => {
+  const gameOverHandler = numberOfRounds => {
     setGameOver(true);
+    setRoundNumber(numberOfRounds);
   };
   const startNewGameHandler = () => {
     setUserNumber();

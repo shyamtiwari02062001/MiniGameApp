@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Alert, FlatList, Text} from 'react-native';
+import {View, StyleSheet, Alert, FlatList} from 'react-native';
 import NumberContainer from '../components/game/NumberConatiner';
 import PrimaryButton from '../components/ui/primaryButton';
 import Title from '../components/ui/title';
 import Card from '../components/ui/Card';
 import Colors from '../constants/color';
 import InstructionText from '../components/ui/instructionText';
+import GuessLogItem from '../components/game/gueeslogitem';
 const generateNumberBetween = (min, max, exclude) => {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
   if (rndNum === exclude) {
@@ -23,9 +24,9 @@ const GameScreen = ({userNumber, onGameOver}) => {
   const [guessRound, setGuessRound] = useState([initalGuess]);
   useEffect(() => {
     if (userNumber === currentGuess) {
-      onGameOver();
+      onGameOver(guessRound.length);
     }
-  }, [currentGuess, userNumber, onGameOver]);
+  }, [currentGuess, userNumber, onGameOver, guessRound.length]);
   useEffect(() => {
     min = 1;
     max = 100;
@@ -70,10 +71,18 @@ const GameScreen = ({userNumber, onGameOver}) => {
           </View>
         </View>
       </Card>
-      <View>
-        {guessRound.map(item => (
-          <Text>{item}</Text>
-        ))}
+      <View style={styles.list}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={guessRound}
+          renderItem={itemData => (
+            <GuessLogItem
+              roundNumber={guessRound.length - itemData.index}
+              guess={itemData.item}>
+              {itemData.item}
+            </GuessLogItem>
+          )}
+        />
       </View>
     </View>
   );
@@ -100,5 +109,9 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
+  },
+  list: {
+    padding: 16,
+    height: '60%',
   },
 });
