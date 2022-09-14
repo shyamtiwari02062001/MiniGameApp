@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import NumberContainer from '../components/game/NumberConatiner';
 import PrimaryButton from '../components/ui/primaryButton';
@@ -15,9 +15,14 @@ const generateNumberBetween = (min, max, exclude) => {
 
 let min = 1;
 let max = 100;
-const GameScreen = ({userNumber}) => {
-  const initalGuess = generateNumberBetween(min, max, userNumber);
+const GameScreen = ({userNumber, onGameOver}) => {
+  const initalGuess = generateNumberBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initalGuess);
+  useEffect(() => {
+    if (userNumber === currentGuess) {
+      onGameOver();
+    }
+  }, [currentGuess, userNumber, onGameOver]);
   const nextGuessHandler = direction => {
     if (
       (direction === 'lower' && currentGuess < userNumber) ||

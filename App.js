@@ -4,14 +4,25 @@ import StartGameScreen from './screens/StartGameScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import GameScreen from './screens/GameScreen';
 import Colors from './constants/color';
+import GameOverScreen from './screens/GameOverScreen';
 const App = () => {
   const [userNumber, setUserNumber] = useState(null);
+  const [gameOver, setGameOver] = useState(true);
   const pickedNumberHandler = pickedNumber => {
     setUserNumber(pickedNumber);
+    setGameOver(false);
+  };
+  const gameOverHandler = () => {
+    setGameOver(true);
   };
   let screen = <StartGameScreen onConfirm={pickedNumberHandler} />;
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} />;
+    screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    );
+  }
+  if (gameOver && userNumber) {
+    screen = <GameOverScreen />;
   }
   return (
     <LinearGradient
