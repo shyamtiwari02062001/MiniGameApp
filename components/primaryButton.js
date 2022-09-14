@@ -20,7 +20,7 @@ const PrimaryButton = ({children}) => {
 export default PrimaryButton;
 const styles = StyleSheet.create({
   buttonOutterContainer: {
-    borderRadius: 50,
+    borderRadius: 20,
     margin: 4,
     overflow: 'hidden',
   },
