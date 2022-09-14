@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, TextInput, StyleSheet, Alert} from 'react-native';
 import PrimaryButton from '../components/primaryButton';
-const StartGameScreen = () => {
+const StartGameScreen = ({onConfirm}) => {
   const [userInput, setUserInput] = useState('');
   const reset = () => {
     setUserInput('');
@@ -14,7 +14,7 @@ const StartGameScreen = () => {
       ]);
       return;
     }
-    console.log('valid number');
+    onConfirm(chosenNumber);
   };
   return (
     <View style={styles.inputContainer}>
