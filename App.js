@@ -1,10 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
+import StartGameScreen from './screens/StartGameScreen';
 const App = () => {
-  return (
-    <View>
-      <Text>Shyam</Text>
-    </View>
-  );
+  return <StartGameScreen />;
 };
 export default App;
+const styles = StyleSheet.create({});
