@@ -7,6 +7,7 @@ import Colors from './constants/color';
 import GameOverScreen from './screens/GameOverScreen';
 const App = () => {
   const [userNumber, setUserNumber] = useState(null);
+  const [roundNumber, setRoundNumber] = useState(0);
   const [gameOver, setGameOver] = useState(true);
   const pickedNumberHandler = pickedNumber => {
     setUserNumber(pickedNumber);
@@ -15,6 +16,10 @@ const App = () => {
   const gameOverHandler = () => {
     setGameOver(true);
   };
+  const startNewGameHandler = () => {
+    setUserNumber();
+    setRoundNumber(0);
+  };
   let screen = <StartGameScreen onConfirm={pickedNumberHandler} />;
   if (userNumber) {
     screen = (
@@ -22,7 +27,13 @@ const App = () => {
     );
   }
   if (gameOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={roundNumber}
+        onStartNewGame={startNewGameHandler}
+      />
+    );
   }
   return (
     <LinearGradient
@@ -33,7 +44,7 @@ const App = () => {
         resizeMode={'cover'}
         imageStyle={styles.backgroundImage}
         style={styles.rootScreen}>
-        <SafeAreaView>{screen}</SafeAreaView>
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );
