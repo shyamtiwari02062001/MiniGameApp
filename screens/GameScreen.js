@@ -90,7 +90,9 @@ const GameScreen = ({userNumber, onGameOver}) => {
 export default GameScreen;
 const styles = StyleSheet.create({
   conatiner: {
+    flex: 1,
     padding: 24,
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
@@ -113,5 +115,6 @@ const styles = StyleSheet.create({
   list: {
     padding: 16,
     height: '60%',
+    width: '100%',
   },
 });
