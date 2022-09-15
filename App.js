@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {StyleSheet, ImageBackground, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  StatusBar,
+  ImageBackground,
+  SafeAreaView,
+} from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import GameScreen from './screens/GameScreen';
@@ -37,17 +42,20 @@ const App = () => {
     );
   }
   return (
-    <LinearGradient
-      style={styles.rootScreen}
-      colors={[Colors.primary700, Colors.accent500]}>
-      <ImageBackground
-        source={require('./assets/images/background.png')}
-        resizeMode={'cover'}
-        imageStyle={styles.backgroundImage}
-        style={styles.rootScreen}>
-        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+    <>
+      <StatusBar backgroundColor={Colors.accent500} />
+      <LinearGradient
+        style={styles.rootScreen}
+        colors={[Colors.primary700, Colors.accent500]}>
+        <ImageBackground
+          source={require('./assets/images/background.png')}
+          resizeMode={'cover'}
+          imageStyle={styles.backgroundImage}
+          style={styles.rootScreen}>
+          <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 };
 export default App;
