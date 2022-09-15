@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Alert, FlatList} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  FlatList,
+  useWindowDimensions,
+} from 'react-native';
 import NumberContainer from '../components/game/NumberConatiner';
 import PrimaryButton from '../components/ui/primaryButton';
 import Title from '../components/ui/title';
@@ -19,6 +25,7 @@ const generateNumberBetween = (min, max, exclude) => {
 let min = 1;
 let max = 100;
 const GameScreen = ({userNumber, onGameOver}) => {
+  const {width} = useWindowDimensions();
   const initalGuess = generateNumberBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initalGuess);
   const [guessRound, setGuessRound] = useState([initalGuess]);
@@ -50,9 +57,8 @@ const GameScreen = ({userNumber, onGameOver}) => {
     setCurrentGuess(newrnd);
     setGuessRound(currentGuessData => [newrnd, ...currentGuessData]);
   };
-  return (
-    <View style={styles.conatiner}>
-      <Title text="Opponent's Guess" />
+  let content = (
+    <>
       <NumberContainer number={currentGuess} />
       <Card>
         <InstructionText style={styles.instructionText}>
@@ -71,6 +77,31 @@ const GameScreen = ({userNumber, onGameOver}) => {
           </View>
         </View>
       </Card>
+    </>
+  );
+  if (width > 500) {
+    content = (
+      <>
+        <View style={styles.buttonsWide}>
+          <View style={styles.button}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+              -
+            </PrimaryButton>
+          </View>
+          <NumberContainer number={currentGuess} />
+          <View style={styles.button}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
+              +
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+  return (
+    <View style={styles.conatiner}>
+      <Title text="Opponent's Guess" />
+      {content}
       <View style={styles.list}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -116,5 +147,9 @@ const styles = StyleSheet.create({
     padding: 16,
     height: '60%',
     width: '100%',
+  },
+  buttonsWide: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
