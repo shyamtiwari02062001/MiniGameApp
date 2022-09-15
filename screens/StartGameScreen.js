@@ -5,6 +5,8 @@ import {
   StyleSheet,
   Alert,
   useWindowDimensions,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import Colors from '../constants/color';
 import PrimaryButton from '../components/ui/primaryButton';
@@ -16,7 +18,7 @@ const StartGameScreen = ({onConfirm}) => {
   const reset = () => {
     setUserInput('');
   };
-  const {width, height} = useWindowDimensions();
+  const {height} = useWindowDimensions();
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(userInput, 10);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
@@ -29,28 +31,34 @@ const StartGameScreen = ({onConfirm}) => {
   };
   const marginTop = height < 380 ? 30 : 100;
   return (
-    <View style={[styles.rootContainer, {marginTop: marginTop}]}>
-      <Title text={'Guess My Number'} />
-      <Card>
-        <InstructionText>Enter a number</InstructionText>
-        <TextInput
-          onChangeText={value => setUserInput(value)}
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType={'number-pad'}
-          autoCapitalize={'none'}
-          value={userInput}
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonConatiner}>
-            <PrimaryButton onPress={reset}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.buttonConatiner}>
-            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-          </View>
+    <ScrollView>
+      <KeyboardAvoidingView behavior="position">
+        <View style={[styles.rootContainer, {marginTop: marginTop}]}>
+          <Title text={'Guess My Number'} />
+          <Card>
+            <InstructionText>Enter a number</InstructionText>
+            <TextInput
+              onChangeText={value => setUserInput(value)}
+              style={styles.numberInput}
+              maxLength={2}
+              keyboardType={'number-pad'}
+              autoCapitalize={'none'}
+              value={userInput}
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonConatiner}>
+                <PrimaryButton onPress={reset}>Reset</PrimaryButton>
+              </View>
+              <View style={styles.buttonConatiner}>
+                <PrimaryButton onPress={confirmInputHandler}>
+                  Confirm
+                </PrimaryButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 export default StartGameScreen;
